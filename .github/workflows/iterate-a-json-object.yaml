@@ -34,7 +34,11 @@ jobs:
           
           for i in {0..1}; do
             echo "${i}"
-            echo "${{ toJson(steps.split.outputs) }}"
+            myvar = "${i}"
+            echo "${myvar}"
+            mySecondVar="${myVar}bar"
+            branchName = "${{ steps.split.outputs._${myvar} }}"
+            echo "${{ steps.split.outputs._0 }}"
             echo "${{ steps.split.outputs._0 }}"
             number=`echo $(jq -r '._0' <<< "toJson(steps.split.outputs")`
           done  
