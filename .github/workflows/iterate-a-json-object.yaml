@@ -6,7 +6,7 @@ on:
       feature_branches:
         description: 'feature branches to be merged separated by commas'
         required: true
-        type: string
+        type: sequence
 
 jobs:
   job1:
