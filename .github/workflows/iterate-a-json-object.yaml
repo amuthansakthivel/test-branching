@@ -22,7 +22,7 @@ jobs:
         run: |
           IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
           echo "${array}"
-          echo "MATRIX=${array}" >> $GITHUB_OUTPUT
+          echo "MATRIX=${array[@]}" >> $GITHUB_OUTPUT
           
   job2:
     needs: job1
