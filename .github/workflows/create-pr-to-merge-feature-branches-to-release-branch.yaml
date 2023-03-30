@@ -6,10 +6,6 @@ on:
       feature_branches:
         description: 'feature branches to be merged separated by commas'
         required: true
-      number_of_feature_branches:
-        description: 'number of feature branches'
-        required: true
-
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -29,15 +25,6 @@ jobs:
         run : |
           git checkout -b ${{ steps.branch_name.outputs.branch-name }} main
           git push origin "main:${{ steps.branch_name.outputs.branch-name }}"
-          
-      - uses: jungwinter/split@v2
-        id: split
-        with:
-          msg: '${{ inputs.feature_branches }}'
-          separator: ","
-
-      - name: print feature branch name
-        run: echo ${{ steps.split.outputs._0 }}
 
       - name: create-pull-request
         id: create-pull-request
