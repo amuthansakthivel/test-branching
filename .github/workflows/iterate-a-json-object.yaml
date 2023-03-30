@@ -8,24 +8,27 @@ on:
         required: true
 
 jobs:
-  create-release:
+  job1:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.MATRIX }}
     steps:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.ACTIONS_PUSH_TOKEN }}
           
       - name: iterate using for loop
+        id: step1
         run: |
           IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
           echo "${array}"
-          echo "MATRIX=${array}" >> $GITHUB_ENV
+          echo "MATRIX=${array}" >> $GITHUB_OUTPUT
           
   job2:
-    needs: create-release
+    needs: job1
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: "${{ env.MATRIX }}"
+        branches: "${{ needs.job1.outputs.output1 }}"
     steps:
     - run: echo "${{ matrix.branches }}"        
