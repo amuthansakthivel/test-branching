@@ -6,9 +6,6 @@ on:
       feature_branches:
         description: 'feature branches to be merged separated by commas'
         required: true
-      number_of_feature_branches:
-        description: 'number of feature branches'
-        required: true
 
 jobs:
   create-release:
@@ -21,7 +18,12 @@ jobs:
       - name: iterate using for loop
         run: |
           IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
-          for index in "${!array[@]}" 
-          do
-            echo "${array[index]}"
-          done
+          echo "::set-output name=matrix::${array}"
+          
+  job2:
+    needs: create-release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ needs.job1.outputs.matrix }}
+    steps:
+    - run: build        
