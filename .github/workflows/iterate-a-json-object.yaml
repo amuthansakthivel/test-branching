@@ -25,6 +25,7 @@ jobs:
     needs: create-release
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ env.MATRIX }}
+      matrix:
+        branches: ["feature-1", "feature-2"]
     steps:
-    - run: build        
+    - run: echo "${{ matrix.branches }}"        
