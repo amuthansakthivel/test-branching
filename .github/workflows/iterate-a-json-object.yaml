@@ -20,15 +20,15 @@ jobs:
       - name: iterate using for loop
         id: step1
         run: |
-          IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
-          echo "${array}"
-          echo "MATRIX=${array[@]}" >> $GITHUB_OUTPUT
+          echo "MATRIX=$input" >> $GITHUB_OUTPUT
+          env:
+            input: ${{ inputs.feature_branches }}
           
   job2:
     needs: job1
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: "${{ fromJson(needs.job1.outputs.output1) }}"
+        branches: ${{ fromJson(needs.job1.outputs.output1) }}
     steps:
     - run: echo "${{ matrix.branches }}"        
