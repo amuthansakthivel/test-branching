@@ -29,6 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: "${{ needs.job1.outputs.output1 }}"
+        branches: "${{ fromJson(needs.job1.outputs.output1) }}"
     steps:
     - run: echo "${{ matrix.branches }}"        
