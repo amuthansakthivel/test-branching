@@ -26,6 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: ["feature-1", "feature-2"]
+        branches: "${{ env.MATRIX }}"
     steps:
     - run: echo "${{ matrix.branches }}"        
