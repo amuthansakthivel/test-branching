@@ -20,7 +20,7 @@ jobs:
           
       - name: iterate using for loop
         run: |
-          IFS=',' read -r -a array <<< "feature1,feature2"
+          IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
           for index in "${!array[@]}" 
           do
             echo "${array[index]}"
