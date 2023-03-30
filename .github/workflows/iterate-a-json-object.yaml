@@ -29,6 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: ${{ fromJson(needs.job1.outputs.output1) }}
+        branches: ${{ toJson(github.event.inputs.feature_branches) }}
     steps:
     - run: echo "${{ matrix.branches }}"        
