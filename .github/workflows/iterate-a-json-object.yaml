@@ -21,9 +21,7 @@ jobs:
       - name: iterate using for loop
         id: step1
         run: |
-          echo "MATRIX=$input" >> $GITHUB_OUTPUT
-          env:
-            input: ${{ inputs.feature_branches }}
+          echo "MATRIX=[feature-1,feature2]" >> $GITHUB_OUTPUT 
           
   job2:
     needs: job1
