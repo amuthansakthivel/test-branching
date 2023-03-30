@@ -18,12 +18,13 @@ jobs:
       - name: iterate using for loop
         run: |
           IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
-          echo "::set-output name=matrix::${array}"
+          echo "${array}"
+          echo "MATRIX=${array}" >> $GITHUB_ENV
           
   job2:
     needs: create-release
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ needs.job1.outputs.matrix }}
+      matrix: ${{ env.MATRIX }}
     steps:
     - run: build        
