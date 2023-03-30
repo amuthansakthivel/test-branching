@@ -21,13 +21,14 @@ jobs:
       - name: iterate using for loop
         id: step1
         run: |
-          echo "MATRIX=[feature-1,feature2]" >> $GITHUB_OUTPUT 
+          BRANCHES='${{ toJSON(github.event.inputs.feature_branches) }}'
+          echo "MATRIX=${BRANCHES}" >> $GITHUB_OUTPUT 
           
   job2:
     needs: job1
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branches: [feature1, feature2]
+        branches: ${{ needs.job1.outputs.output1 }}
     steps:
     - run: echo "${{ matrix.branches }}"        
