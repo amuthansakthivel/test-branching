@@ -17,29 +17,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.ACTIONS_PUSH_TOKEN }}
-
-      - uses: jungwinter/split@v2
-        id: split
-        with:
-          msg: '${{ inputs.feature_branches }}'
-          separator: ","
-
-      - name: print feature branch name
-        run: |
-          echo "${{ steps.split.outputs._0 }}"
-          echo "${{ steps.split.outputs._1 }}"
           
       - name: iterate using for loop
         run: |
-          
-          for i in {0..1}; do
-            echo "${i}"
-            myvar = "${i}"
-            echo "${myvar}"
-            mySecondVar="${myVar}bar"
-            branchName = "${{ steps.split.outputs._${myvar} }}"
-            echo "${{ steps.split.outputs._0 }}"
-            echo "${{ steps.split.outputs._0 }}"
-            number=`echo $(jq -r '._0' <<< "toJson(steps.split.outputs")`
-          done  
-        
+          IFS=',' read -r -a array <<< "${{ inputs.feature_branches }}"
+          for index in "${!array[@]}" do
+            echo "${array[index]}"
+          done
